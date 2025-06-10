@@ -10,21 +10,22 @@ const SignIn = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const dispatch =useDispatch();
+  const [error,setError] = useState("");
   const handleLogin = async () => {
     try {
       const result = await axios.post( Base_URL + '/login', {
        email: emailId,
         password,
       },{withCredentials:true});
-      // console.log(result.data);
-    dispatch(addUser(result.data));
-  return  navigate("/")
-      console.log("Logging in with:", { email: emailId, password });
-
-    } catch (err) {
-      console.log(err); 
-    }
-  };
+    
+     console.log("Response data1:", result.data);
+        dispatch(addUser(result.data));
+       return  navigate("/feed");
+  } catch (err) {
+    setError(err.response?.data || "something went wrong" )
+    // console.log("Login error:", err.response?.data || err.message);
+  }
+};
 
   return (
     <div className="flex justify-center my-24">
@@ -105,7 +106,7 @@ const SignIn = () => {
               <br />At least one number <br />At least one lowercase letter{' '}
               <br />At least one uppercase letter
             </p>
-
+          <p className='text-red-500' > {error}</p>
             <div className="card-actions justify-center mt-4">
               <button type="submit" className="btn btn-primary">
                 Login
