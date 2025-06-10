@@ -10,18 +10,17 @@ app.use(cors({
   origin:"http://localhost:5173",
   credentials:true
 }))
-app.use(express.json()); //to read json data
+app.use(express.json()); 
 app.use(cookieParser());
 
 
 const {userRouter} =require("../routes/auth");
-// const {deleteRouter} =require("../routes/delete");
+
 const {profileRouter} =require("../routes/profile")
 const {connectionRouter} = require("../routes/connection")
 
 app.use("/",userRouter);
 app.use("/",profileRouter);
-// app.use("/",deleteRouter);
 app.use("/",connectionRouter);
 
 connectDB().then(() => {
