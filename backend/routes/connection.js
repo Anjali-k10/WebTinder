@@ -129,7 +129,7 @@ connectionRouter.get("/request/review",userAuth,async(req,res)=>{
         }).populate("fromUserID",["firstName","lastName"]);
     
         if(SeeAllRequest.length===0){
-            return res.status(404).json({ message: "Their is no request."});
+            return res.status(200).json({ message: "Their is no request."});
         }
       
         res.json({
