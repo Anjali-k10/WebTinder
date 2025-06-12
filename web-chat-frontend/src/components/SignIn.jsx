@@ -18,7 +18,7 @@ const SignIn = () => {
         password,
       },{withCredentials:true});
     
-     console.log("Response data1:", result.data);
+    //  console.log("Response data1:", result.data);
         dispatch(addUser(result.data));
        return  navigate("/feed");
   } catch (err) {

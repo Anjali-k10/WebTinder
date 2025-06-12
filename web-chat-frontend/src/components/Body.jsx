@@ -17,7 +17,7 @@ const Body = () => {
      const res = await axios.get(Base_URL + "/user/view",{
       withCredentials:true,
     });
-    console.log("Response data:", res.data);
+    // console.log("Response data:", res.data);
     dispatch(addUser(res.data));
     }
     catch(err){
