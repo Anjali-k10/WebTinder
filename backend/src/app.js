@@ -17,11 +17,11 @@ app.use(cookieParser());
 const {userRouter} =require("../routes/auth");
 
 const {profileRouter} =require("../routes/profile")
-const {connectionRouter} = require("../routes/connection")
+const connectionRouter = require("../routes/connection")
 
 app.use("/",userRouter);
 app.use("/",profileRouter);
-app.use("/",connectionRouter);
+app.use("/user",connectionRouter);
 
 connectDB().then(() => {
     console.log("databse is connected")

@@ -4,7 +4,7 @@ const connectionRouter = express.Router();
 const { connectionModel } = require("../models/connectionReq");
 const { userModel } = require("../models/User");
 
-connectionRouter.post("/user/request/send/:status/:userId", userAuth, async (req, res) => {
+connectionRouter.post("/request/send/:status/:userId", userAuth, async (req, res) => {
     try {
       const user = req.user;
       const fromUserID = user._id;
@@ -53,7 +53,7 @@ connectionRouter.post("/user/request/send/:status/:userId", userAuth, async (req
   }
 );
 
-connectionRouter.post("/user/request/review/:status/:userId", userAuth,async (req, res) => {
+connectionRouter.post("/request/review/:status/:userId", userAuth,async (req, res) => {
     try {
       const loggedInUser = req.user;
       const requestedID = req.params.userId;
@@ -90,7 +90,7 @@ connectionRouter.post("/user/request/review/:status/:userId", userAuth,async (re
   }
 );
 
-connectionRouter.get("/user/connection/review/", userAuth, async (req, res) => {
+connectionRouter.get("/connection/review", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
     const SeeAllConnection = await connectionModel.find({ 
@@ -100,7 +100,9 @@ connectionRouter.get("/user/connection/review/", userAuth, async (req, res) => {
       .populate("fromUserID",["firstName","lastName"]);
 
     if(SeeAllConnection.length===0){
-        return res.status(404).json({ message: "You don't have any connections yet."});
+        return res.status(200).json({ message: "You don't have any connections yet." ,
+          
+        });
     }
 
     const data= SeeAllConnection.map((row)=>{
@@ -118,7 +120,7 @@ connectionRouter.get("/user/connection/review/", userAuth, async (req, res) => {
   }
 });
 
-connectionRouter.get("/user/request/review/",userAuth,async(req,res)=>{
+connectionRouter.get("/request/review",userAuth,async(req,res)=>{
      try{
         const loggedInUser = req.user;
         const SeeAllRequest = await connectionModel.find({
@@ -140,7 +142,7 @@ connectionRouter.get("/user/request/review/",userAuth,async(req,res)=>{
      }
 })
 
-connectionRouter.get("/user/sent/request/status/",userAuth,async(req,res)=>{
+connectionRouter.get("/sent/request/status",userAuth,async(req,res)=>{
      try{
         const loggedInUser = req.user;
         const SeeAllSentRequest = await connectionModel.find({
@@ -162,7 +164,7 @@ connectionRouter.get("/user/sent/request/status/",userAuth,async(req,res)=>{
      }
 })
 
-connectionRouter.get("/user/feed",userAuth,async(req,res)=>{
+connectionRouter.get("/feed",userAuth,async(req,res)=>{
     try{
     const loggedInUser=req.user;
         const page=req.query.page ||1;
@@ -195,6 +197,5 @@ connectionRouter.get("/user/feed",userAuth,async(req,res)=>{
         res.status(400).send("something went wrong in feed:" + err.message)
     }
 })
-module.exports = {
-  connectionRouter,
-};
+module.exports =  connectionRouter;
+
