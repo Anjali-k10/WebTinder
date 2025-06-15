@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import  { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { Base_URL } from '../utils/constants';
+import { Link } from 'react-router-dom';
+
 
 const SignIn = () => {
   const [emailId, setEmailId] = useState('');
@@ -17,13 +19,11 @@ const SignIn = () => {
        email: emailId,
         password,
       },{withCredentials:true});
-    
-    //  console.log("Response data1:", result.data);
+
         dispatch(addUser(result.data));
        return  navigate("/feed");
   } catch (err) {
     setError(err.response?.data || "something went wrong" )
-    // console.log("Login error:", err.response?.data || err.message);
   }
 };
 
@@ -113,6 +113,15 @@ const SignIn = () => {
               </button>
             </div>
           </form>
+          <div className="text-center mt-4">
+  <p className="text-sm">
+    Don't have an account?{" "}
+    <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+      Create one now
+    </Link>
+  </p>
+</div>
+
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ const NavBar = () => {
   const navigate=useNavigate();
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  // console.log("user1 :" , user);
+  // console.log("user1 :" , user);console.log(user);
  const handleLogout=async()=>{
   try{
    await axios.post(Base_URL+ "/logout",{},
@@ -34,15 +34,16 @@ const NavBar = () => {
       <div className="dropdown dropdown-end mx-5">
   <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
     <div className="w-10 rounded-full">
-     {/* <img alt="user photo" src={user.photoUrl} /> */}
+
       <img
         alt="User profile"
         src={
-          user
-            ? "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          user?.data?.profilePhoto
+                 ? `${Base_URL}${user.data.profilePhoto}`
             : profilePhoto
         }
       />
+      
     </div>
   </div>
 
