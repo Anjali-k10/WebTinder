@@ -6,8 +6,8 @@ const cookieParser =require("cookie-parser");
 const { logIn } = require("../config/login");
 const { signup } = require("../config/signup");
 const {userAuth}= require("../middlewares/userAuth");
-
-userRouter.post("/signup",async(req,res)=>{
+const {upload} = require("../middlewares/upload")
+userRouter.post("/signup", upload.single("profilePhoto"),async(req,res)=>{
   try{
 
      await signup(req,res);

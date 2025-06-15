@@ -13,7 +13,7 @@ const connectionSchema = new mongoose.Schema({
     Status:{
         type:String,
         enum:{
-            values:["accept","reject","interested","rejected"],
+            values:["accept","reject","interested","ignored"],
             message: '{VALUE} is not defined in Status entry'
         } 
     },   

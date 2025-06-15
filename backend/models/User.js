@@ -25,7 +25,22 @@ const userSchema = new mongoose.Schema({
     },
     skills:{
         type:[String]
-    }
+    },  bio: {
+    type: String
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other'] 
+  },
+  age: {
+    type: Number,
+    min: 0
+  },
+   profilePhoto: {
+    type: String,
+     default: "/uploads/default-profile.png"
+    // default: "https://yourdomain.com/default-profile.png" // Replace with your actual default image URL if hosted
+  }
 });
 userSchema.methods.getJWT=async function (req,res) {
     user=this;

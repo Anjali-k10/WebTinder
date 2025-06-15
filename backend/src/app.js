@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 const cookieParser= require("cookie-parser");
 const cors = require("cors")
 const { connectDB } = require("../config/database");
 const { userModel } = require("../models/User");
-
+const {upload } = require("../middlewares/upload")
 
 app.use(cors({
   origin:"http://localhost:5173",
@@ -22,6 +23,7 @@ const connectionRouter = require("../routes/connection")
 app.use("/",userRouter);
 app.use("/",profileRouter);
 app.use("/user",connectionRouter);
+app.use('/uploads', express.static(path.join(__dirname,'..', 'uploads')));
 
 connectDB().then(() => {
     console.log("databse is connected")
