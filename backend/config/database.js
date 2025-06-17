@@ -1,13 +1,12 @@
 const mongoose  = require("mongoose");
-
+const dotenv = require('dotenv');
+dotenv.config();
 const connectDB=async()=>{
- try{ 
-  await mongoose.connect("mongodb+srv://anjali943122:qc7t32h099mrIckL@cluster0.rror4.mongodb.net/webChat");
- 
-}
-
-  catch(err){
-    console.log("error in databse:" + err.message)
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log(" Connected to MongoDB");
+  } catch (error) {
+    console.error(" MongoDB connection failed:", error.message);
   }
 }
 // connectDB().then(() => {
