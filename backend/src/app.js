@@ -8,7 +8,8 @@ const { userModel } = require("../models/User");
 const {upload } = require("../middlewares/upload")
 
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin: "https://web-tinder.vercel.app",
+  // origin:"http://localhost:5173",
   credentials:true
 }))
 app.use(express.json()); 
