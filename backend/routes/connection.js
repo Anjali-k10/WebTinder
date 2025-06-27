@@ -59,6 +59,8 @@ connectionRouter.post("/request/review/:status/:userId", userAuth,async (req, re
       const requestedID = req.params.userId;
       const Status = req.params.status;
       const AllowedInputStatus = ["accept", "reject"];
+      console.log("Params:", { requestedID, Status, loggedInUserId: loggedInUser._id });
+
       if (!AllowedInputStatus.includes(Status)) {
         return res
           .status(401)
@@ -71,6 +73,7 @@ connectionRouter.post("/request/review/:status/:userId", userAuth,async (req, re
           { Status: "interested" },
         ],
       });
+       console.log("Connection found:", connectionReview);
       if (!connectionReview) {
         return res
           .status(401)
@@ -96,8 +99,18 @@ connectionRouter.get("/connection/review", userAuth, async (req, res) => {
     const SeeAllConnection = await connectionModel.find({ 
       $or: [{Status: "accept", fromUserID: loggedInUser._id }, 
            {Status: "accept", toUserID: loggedInUser._id }],
-    }).populate("toUserID",["firstName","lastName"])
-      .populate("fromUserID",["firstName","lastName"]);
+    }).populate("toUserID",[ "firstName",
+      "lastName",
+      "profilePhoto",
+      "age",
+      "gender",
+      "bio"])
+      .populate("fromUserID",[ "firstName",
+      "lastName",
+      "profilePhoto",
+      "age",
+      "gender",
+      "bio"]);
 
     if(SeeAllConnection.length===0){
         return res.status(200).json({ message: "You don't have any connections yet." ,
@@ -126,7 +139,12 @@ connectionRouter.get("/request/review",userAuth,async(req,res)=>{
         const SeeAllRequest = await connectionModel.find({
           Status:  "interested",
          toUserID: loggedInUser._id 
-        }).populate("fromUserID",["firstName","lastName"]);
+        }).populate("fromUserID",[  "firstName",
+      "lastName",
+      "profilePhoto",
+      "age",
+      "gender",
+      "bio"]);
     
         if(SeeAllRequest.length===0){
             return res.status(200).json({ message: "Their is no request."});
