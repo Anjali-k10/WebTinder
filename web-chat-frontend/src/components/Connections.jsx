@@ -33,6 +33,9 @@ const Connections = () => {
       {connections.map((connection) => {
         const { _id, firstName, lastName, profilePhoto, age, gender, about } =
           connection;
+          const photoURL = profilePhoto
+            ? `${Base_URL}${profilePhoto}`  // Just prepend Base_URL without adding '/uploads/'
+            : defaultPhoto;
         return (
           <div
             key={_id}
@@ -43,7 +46,7 @@ const Connections = () => {
               <img
                 className="rounded-full w-20 h-20"
                 alt="photo"
-                src={profilePhoto}
+                src={photoURL}
               />{" "}
             </div>
             <div className="text-left mx-4">

@@ -10,7 +10,7 @@ const Request = () => {
 
   const reviewRequest=async(status,_id)=>{
     try{
-      const res= await axios.post(Base_URL+ "/request/review/" + status + "/" + _id,
+      const res= await axios.post(Base_URL+ "/user/request/review/" + status + "/" + _id,
         {},{
         withCredentials:true,
       } );
@@ -42,8 +42,14 @@ const Request = () => {
     <div className="text-center my-10">
       <h1 className="text-bold text-white text-3xl">Requests</h1>
       {requests.map((request) => {
-        const { _id, firstName, lastName, profilePhoto, age, gender, about } =
-          request;
+      const { _id, fromUserID } = request;
+const { firstName, lastName, profilePhoto, age, gender,  about } = fromUserID || {};
+    
+
+const photoURL = profilePhoto
+  ? `${Base_URL}${profilePhoto}`  
+  : defaultPhoto;
+
         return (
           <div
             key={_id}
@@ -54,7 +60,7 @@ const Request = () => {
               <img
                 className="rounded-full w-20 h-20"
                 alt="photo"
-                src={profilePhoto}
+                src={photoURL}
               />{" "}
             </div>
             <div className="text-left mx-4">
