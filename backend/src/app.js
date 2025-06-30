@@ -7,10 +7,21 @@ const { connectDB } = require("../config/database");
 const { userModel } = require("../models/User");
 const {upload } = require("../middlewares/upload")
 
+
+
+const { intializeSocket } = require("../utils/server");
+const {createServer} = require('http');
+const server= createServer(app);
+intializeSocket(server);
+
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://web-tinder.vercel.app"
 ];
+
+
+
 
 app.use(cors({
   origin: function(origin, callback) {
@@ -30,17 +41,20 @@ app.use(cookieParser());
 const {userRouter} =require("../routes/auth");
 
 const {profileRouter} =require("../routes/profile")
-const connectionRouter = require("../routes/connection")
-
+const connectionRouter = require("../routes/connection");
+// const paymentRouter = require("../routes/payment");
+const chatRouter = require("../routes/chat");
 app.use("/",userRouter);
 app.use("/",profileRouter);
+app.use("/",chatRouter);
+// app.use("/",paymentRouter)
 app.use("/user",connectionRouter);
 app.use('/uploads', express.static(path.join(__dirname,'..', 'uploads')));
 connectDB()
   .then(() => {
     console.log("Database is connected");
     const PORT = process.env.PORT || 8888;
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`App is listening at port ${PORT}`);
     });
   })

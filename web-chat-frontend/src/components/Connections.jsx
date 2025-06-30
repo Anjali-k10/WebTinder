@@ -3,6 +3,7 @@ import React, { use, useEffect } from "react";
 import { Base_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -33,13 +34,13 @@ const Connections = () => {
       {connections.map((connection) => {
         const { _id, firstName, lastName, profilePhoto, age, gender, about } =
           connection;
-          const photoURL = profilePhoto
-            ? `${Base_URL}${profilePhoto}`  // Just prepend Base_URL without adding '/uploads/'
-            : defaultPhoto;
+        const photoURL = profilePhoto
+          ? `${Base_URL}${profilePhoto}` // Just prepend Base_URL without adding '/uploads/'
+          : defaultPhoto;
         return (
           <div
             key={_id}
-            className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
+            className="flex  m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto"
           >
             <div>
               {" "}
@@ -54,10 +55,12 @@ const Connections = () => {
                 {firstName + " " + lastName}
               </h2>
               <p>{about}</p>
+
               {age && gender && <p>{age + "," + gender}</p>}
             </div>
-
-            
+            <button className="btn btn-primary mt-2 ">
+              <Link to={`/chat/${_id}`}>Chat</Link>
+            </button>
           </div>
         );
       })}

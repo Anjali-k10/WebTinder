@@ -36,6 +36,12 @@ const userSchema = new mongoose.Schema({
     type: Number,
     min: 0
   },
+    //  isPremium: {
+    //     type: Boolean,
+    //     default: false
+    // },
+    // membershipType: {
+    //     type: String,   },
    profilePhoto: {
     type: String,
      default: "/uploads/default-profile.png"

@@ -19,7 +19,7 @@ const logIn = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, "devTinder2025");
 
     res.cookie("token", token, {
-      maxAge: 8 * 3600000,
+      // maxAge: 8 * 3600000,
       httpOnly: true,
       sameSite: "Lax",
       secure: false, // change to true in production

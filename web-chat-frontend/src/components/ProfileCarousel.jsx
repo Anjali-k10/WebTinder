@@ -7,7 +7,7 @@ const ProfileCarousel = ({ user }) => {
     <div className="flex justify-center bg-base-100 mt-8">
       <div className="carousel w-full max-w-md mx-auto">
         {/* Slide 1: Profile Card */}
-        <div id="slide1" className="carousel-item relative w-full justify-center">
+        <div id="slide1" className=" mt-8 carousel-item relative w-full justify-center">
           <div className="w-full bg-base-300 pt-2 px-4 pb-4 rounded-xl shadow-md">
             <Card user={user} />
           </div>
@@ -17,7 +17,7 @@ const ProfileCarousel = ({ user }) => {
         </div>
 
         {/* Slide 2: Edit Profile Form */}
-        <div id="slide2" className="carousel-item relative w-full justify-center">
+        <div id="slide2" className="carousel-item relative w-full justify-center ">
           <div >
             <EditProfile user={user} />
           </div>

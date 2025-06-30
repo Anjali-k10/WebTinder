@@ -1,11 +1,12 @@
 import axios from "axios";
 import { Base_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Card from "./Card";
 import { addUser } from "../utils/userSlice";
 
 const EditProfile = ({ user }) => {
+  const userData = useSelector((store) => store.user);
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
   const [email, setEmail] = useState(user?.email);
@@ -18,6 +19,12 @@ const EditProfile = ({ user }) => {
   const [showToast, setShowToast] = useState(false);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (userData?.data?.profilePhoto) {
+      setProfilePhoto(`${Base_URL}${userData.data.profilePhoto}`);
+      // console.log("Profile photo set to:", profilePhoto);
+    }
+  }, [user]);
 
   const saveProfile = async () => {
     setError("");
@@ -29,14 +36,13 @@ const EditProfile = ({ user }) => {
           withCredentials: true,
         }
       );
-  
-      dispatch(addUser(res?.data?.updatedProfile));
-       setShowToast(true);
-      
-        setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
 
+      dispatch(addUser(res?.data?.updatedProfile));
+      setShowToast(true);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
     } catch (err) {
       setError(err.response.data);
     }
@@ -166,11 +172,9 @@ const EditProfile = ({ user }) => {
                 Profile Picture
               </label>
               <input
-                value={profilePhoto}
-                onChange={(e) => setProfilePhoto(e.target.value)}
                 type="file"
                 accept="image/*"
-                className="block w-full text-sm text-gray-600 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-blue-200 file:text-blue-700 hover:file:bg-blue-100"
+                onChange={(e) => setProfilePhoto(e.target.files[0])}
               />
             </div>
 
@@ -201,11 +205,13 @@ const EditProfile = ({ user }) => {
           }}
         />
       </div>
-    { showToast &&( <div className="toast toast-top toast-center">
-        <div className="alert alert-success">
-          <span>Profile updated successfully.</span>
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>Profile updated successfully.</span>
+          </div>
         </div>
-      </div>)}
+      )}
     </>
   );
 };

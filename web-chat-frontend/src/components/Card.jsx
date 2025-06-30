@@ -4,6 +4,7 @@ import { Base_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import {removeUserFromFeed } from "../utils/feedSlice";
 const Card = ({ user }) => {
+  // console.log("Card user:", user.profilePhoto);
  if (!user) return null; 
   const dispatch = useDispatch();
   const { firstName, lastName, age, gender, about, email, phNumber, skills,_id } = user;
@@ -22,19 +23,33 @@ const Card = ({ user }) => {
   }
  }
 
+ const rawProfilePhoto = user?.profilePhoto || "";
+
+// Decide what type:
+let finalPhotoSrc;
+
+if (rawProfilePhoto.startsWith("http://") || rawProfilePhoto.startsWith("https://")) {
+  // Case 1: absolute URL → keep as is
+  finalPhotoSrc = rawProfilePhoto;
+} else if (rawProfilePhoto.startsWith("/")) {
+  // Case 2: relative path → add Base_URL
+  finalPhotoSrc = `${Base_URL}${rawProfilePhoto}`;
+} else {
+  // Case 3: empty or unexpected → fallback
+  finalPhotoSrc = profilePhoto;
+}
 
   return (
     <div className="card bg-base-300 w-96 shadow-sm">
       <figure>
-        <img
-          className="w-56"
-           src={
-            user?.profilePhoto
-              ? `${Base_URL}${user.profilePhoto}`
-              : profilePhoto
-          }
-          alt="photo"
-        />
+      
+<img
+  alt="User profile"
+  src={finalPhotoSrc}
+
+            
+
+             />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName} </h2>

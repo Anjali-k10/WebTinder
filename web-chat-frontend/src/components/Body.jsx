@@ -31,7 +31,7 @@ const Body = () => {
   };
 
   useEffect(()=>{
-    if(!userData || !userData._id ){
+    if (!userData?.data?._id){
       fetchUser();
     }
   }, []);
